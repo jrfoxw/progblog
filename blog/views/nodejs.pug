@@ -1,0 +1,121 @@
+extends layout
+//- block head
+//- block navbar
+block content
+
+ .titleWrap   
+    h1= title
+    p= subtitle
+    div.container
+        div.row
+        div.col-md-8.col-md-offset-2
+            h5 #{time}
+            h2 Setup an Express 4 Backend Server
+            p.well. 
+                I was trying to decide on how to get this Blog up and running, and soon
+                came to the realization that the best way to do this. Is to start from scratch.
+                We will build a standard backend application with express, the same code used to
+                create this blog app. 
+        
+        div.row
+        div.col-md-8.col-md-offset-2
+            h3 Installing Express generator 
+            p.well first lets get express-generator from npm 
+            pre
+                code.largeCode.language-bash.
+                    $ npm install -g express-generator
+            p.well Next run the generator with the following command. to create a new application.
+            pre
+                code.largeCode.language-bash.
+                    $ express --view=pug newapp #<--- choosing pug as template engine
+                    $ cd newapp
+                    $ npm install               #<--- install dependencies
+            h3 Directory Layout
+            h4 Pug templating language files     
+            pre
+                code.largeCode.language-bash.
+                    $ cd newapp/views
+                        views
+                            ├── error.pug
+                            ├── index.pug
+                            └── layout.pug
+            h4 Server files
+            pre
+                code.largeCode.language-bash.
+                    $ cd newapp/bin
+                        bin
+                        └── www
+            h4 Public files
+            pre
+                code.largeCode.language-bash.
+                    $ cd newapp/Public
+                        public
+                           ├── images
+                           ├── javascripts
+                           └── stylesheets
+            h4 Route files
+            pre
+                code.largeCode.language-bash.
+                    $ cd newapp/Public
+                       routes
+                          ├── index.js
+                          └── users.js
+            h4 How Express controls the "flow"
+            img.well(src="./images/express-diagram.png" width="375" height="450")
+            p.well. 
+                Multiple routes can be added each leading to a different get,post
+                or any other REST/CRUD functionality. The normal approach is to have 
+                a seperate js file for each page on the site.
+            pre
+                code.largeCode.language-javascript.
+                    // index.js
+                    var express = require('express');
+                    var router = express.Router();
+
+                    /* GET home page. */
+                    router.get('/', function(req, res, next) {
+                    // JSON sent through when rendering 
+                    res.render('index', { 
+                                            title: 'Foxbards Den', 
+                                            subtitle: 'Programming the Bards way..',
+                                            time: Date().toLocaleString()
+                                        });
+                                    });
+
+
+                    module.exports = router;
+            p.well.
+                As you can see each route can also "carry" a java object from which
+                any templating language (in this case 'Pug') can be used to render the JSON.
+            h4 Process Templating through Pug
+            .well
+                p.
+                    First express needs to know what we 'view engine' we are using and 
+                    where they are located.
+                p 
+                  |  In this case we are telling express to return our view, using the 
+                  a(href="https://pugjs.org") pug
+                  |  templating language. You can easily change to any other templating
+                  |  languages out there like Jade, Handlebars, Jinja, etc. 
+            pre
+                code.largeCode.language-javascript.
+                    // view engine setup
+                        app.set('views', path.join(__dirname, 'views'));
+                        app.set('view engine', 'pug');
+               
+            .well
+                p. 
+                    After that its a simple process of adding your template file
+                    to the views directory...
+            h4 Running your app
+               pre
+                code.largeCode.language-bash.
+                    $ npm start
+               .well
+                p or
+               pre
+                code.largeCode.language-bash.
+                    $ npm install nodemon -g
+                    $ nodemon          
+               .well
+                p You can then navigate to localhost:3000 to see a welcome from express     

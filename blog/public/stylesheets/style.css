@@ -1,0 +1,22 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.largeCode {
+
+  font-size: 18px;
+  font-family: "monospace";
+  color: orange;
+}
+
+.titleWrap{
+
+  margin-top: 80px;
+}
+
+
